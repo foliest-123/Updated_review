@@ -20,3 +20,18 @@ for file in modified_files:
     
     # Display the changes
     print(diff_result.stdout)
+
+
+result = subprocess.run(
+    'git diff --staged --color=always files/test_2.ndjson | Select-String -Pattern \'\\e\[32m|\\e\[0m\'',
+    capture_output=True,
+    text=True,
+    shell=True
+)
+
+# Access the output of changed lines
+changed_lines = result.stdout
+
+# Display the changed lines
+print("Changed lines:")
+print(changed_lines)
