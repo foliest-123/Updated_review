@@ -13,8 +13,6 @@ def remove_ansi_escape(line):
     line = ansi_escape.sub('', line)
     if line.startswith('+'):
         line = line[1:].strip().replace("\\", " ")
-        line = line.encode().decode('unicode-escape')
-
     return line
 
 for file in modified_files:
