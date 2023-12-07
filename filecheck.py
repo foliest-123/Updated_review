@@ -25,4 +25,4 @@ for file in modified_files:
         if add_line.startswith('\x1b[32m+'):
             added_lines.append(add_line)
 
-print(added_lines)
+print(added_lines[2])
