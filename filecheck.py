@@ -20,7 +20,6 @@ for file in modified_files:
     diff_command = f'git diff --color=always --staged -U0 {file}'
     diff_result = subprocess.run(diff_command, capture_output=True, shell=True, text=True)
     diff_lines = diff_result.stdout.splitlines()
-
     for add_line in diff_lines:
         if add_line.startswith('\x1b[32m+'):
             processed_line = remove_ansi_escape(add_line)
@@ -33,5 +32,6 @@ with open('added_lines.ndjson', 'w') as file:
 
 try:
     subprocess.run(['git', 'commit', '-m', 'last-commit'], capture_output=True, text=True)
+    subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
 except subprocess.CalledProcessError as e:
     print(f"Git commit failed with error: {e}")
