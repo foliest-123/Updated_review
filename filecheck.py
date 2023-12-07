@@ -2,7 +2,7 @@ import subprocess
 import re
 import ndjson
 
-subprocess.run(['git', 'add', '.'])
+subprocess.run(['git', 'add', 'files'])
 
 result = subprocess.run(['git', 'status'], capture_output=True, text=True)
 modified_files = re.findall(r'\s+modified:\s+([\w./]+\.ndjson)', result.stdout)
