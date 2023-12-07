@@ -1,22 +1,28 @@
 import subprocess
 import re
+import ndjson
+import ast
+
+
+
+
+
 
 subprocess.run(['git', 'add', '.'])
 
 result = subprocess.run(['git', 'status'], capture_output=True, text=True)
 modified_files = re.findall(r'\s+modified:\s+([\w./]+\.ndjson)', result.stdout)
 
+added_lines = []
 
 for file in modified_files:
     print(file)
+    diff_command = f'git diff --color=always --staged -U0 {file}'
+    diff_result = subprocess.run(diff_command, capture_output=True, shell=True, text=True)
+    diff_lines = diff_result.stdout.splitlines()
 
-    diff_command = (f'git diff --color=always {file}')
+    for add_line in diff_lines:
+        if add_line.startswith('\x1b[32m+'):
+            added_lines.append(add_line)
 
-    diff_result = subprocess.run(
-        diff_command,
-        capture_output=True,
-        shell=True,
-        text=True)
-
-    print(diff_result.stdout)
-    print(diff_result.stderr)
+print(added_lines)
