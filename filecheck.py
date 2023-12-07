@@ -9,6 +9,8 @@ modified_files = re.findall(r'\s+modified:\s+([\w./]+\.ndjson)', result.stdout)
 
 added_lines = []
 def remove_ansi_escape(line):
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    line = ansi_escape.sub('', line)
     if line.startswith('+'):
         line = line[1:].strip()
     return line
